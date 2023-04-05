@@ -1,8 +1,14 @@
 import { useState } from 'react'
+import { BrowserRouter } from 'react-router-dom'
+import { Header } from './components/Header'
+import { Router } from './Router'
+import { GlobalStyle } from './styles/global'
 
 export function App() {
   return (
-    <div>
-    </div>
+    <BrowserRouter>
+      <Router />
+      <GlobalStyle />
+    </BrowserRouter>
   )
 }
