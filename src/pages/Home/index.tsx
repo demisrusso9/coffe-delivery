@@ -13,7 +13,7 @@ export function Home() {
   return (
     <>
       <LandingSection>
-        <img className='background' src={background} alt='' />
+        {/* <img className='background' src={background} alt='' /> */}
 
         <div>
           <h1>Encontre o café perfeito para qualquer hora do dia</h1>
@@ -47,7 +47,7 @@ export function Home() {
           </Items>
         </div>
 
-        <img src={landing} alt='' />
+        <img className='landing' src={landing} alt='' />
       </LandingSection>
 
       <OurCoffeeSection>

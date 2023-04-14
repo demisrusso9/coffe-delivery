@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { ShoppingCartSimple, Plus, Minus } from '@phosphor-icons/react'
-import { CardContainer, Footer, IncrementDecrement, Information, Tags } from './styles'
+import { CardContainer, Footer, Information, Tags } from './styles'
 import { useCoffee } from '../../context/coffeeContext'
+import { IncrementDecrement } from '../../components/IncrementDecrement'
 
 interface CoffeCardProps {
   coffee: {
@@ -21,7 +22,7 @@ export function CoffeeCard({ coffee }: CoffeCardProps) {
   function handleSubmit(id: number) {
     if (count === 0) return
 
-    addCoffeeToCart(id)
+    addCoffeeToCart(id, count)
   }
 
   function increment() {
@@ -52,17 +53,7 @@ export function CoffeeCard({ coffee }: CoffeCardProps) {
           {coffee.price}
         </p>
 
-        <IncrementDecrement>
-          <button onClick={() => decrement()}>
-            <Minus size={14} />
-          </button>
-
-          <input type='number' value={count} readOnly />
-
-          <button onClick={() => increment()}>
-            <Plus size={14} />
-          </button>
-        </IncrementDecrement>
+        <IncrementDecrement increment={increment} decrement={decrement} count={count} />
 
         <button onClick={() => handleSubmit(coffee.id)}>
           <ShoppingCartSimple size={22} weight={'fill'} fill={'#FFF'} />

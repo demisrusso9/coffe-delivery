@@ -62,6 +62,7 @@ export const Footer = styled.div`
     span {
       font: 400 .875rem/1.3 'Roboto', sans-serif;
     }
+    margin-right: 23px;
   }
 
   > button {

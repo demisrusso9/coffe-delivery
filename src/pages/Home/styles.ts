@@ -3,25 +3,23 @@ import styled from 'styled-components'
 export const LandingSection = styled.section`
   display: flex;
   align-items: center;
+  justify-content: center;
   margin-bottom: 4rem;
   height: 544px;
-  gap: 4rem;
+  margin-top: 126px;
+  gap: 56px;
 
   > div {
-    width: 50%;
-
     h1 {
       font: bold 3rem/1.3 'Baloo 2', sans-serif;
       color: ${props => props.theme['base-title']};
       text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-      width: 80%;
     }
 
-    p {
+    > p {
       font: 400 1.25rem 'Roboto', sans-serif;
       color: ${props => props.theme['base-subtitle']};
       margin-top: 1rem;
-      width: 80%;
     }
   }
 
@@ -29,22 +27,30 @@ export const LandingSection = styled.section`
     position: absolute;
     right: 0;
     width: 100%;
+    max-width: 500px;
+    max-height: 500px;
+  }
+
+  .landing {
+    max-width: 100%;
+    height: auto;
   }
 `
 
 export const Items = styled.div`
   margin-top: 4.125rem;
 
-  display: grid;
-  grid-template-columns: 350px 450px;
-  gap: 20px 0;
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr;
+  white-space: nowrap;
+  gap: 20px 40px;
 
-  p {
+  > p {
     display: flex;
     align-items: center;
     gap: 0.75rem;
     color: ${props => props.theme['base-text']};
-    font-family: 'Roboto', sans-serif;
+    font: 400 1rem/1.3 'Roboto', sans-serif;
 
     span {
       display: flex;
@@ -77,6 +83,7 @@ export const Items = styled.div`
 `
 
 export const OurCoffeeSection = styled.section`
+  width: 100%;
   display: flex;
   flex-direction: column;
   margin-bottom: 6rem;
@@ -89,7 +96,8 @@ export const OurCoffeeSection = styled.section`
 
   > div {
     display: grid;
-    grid-template-columns: repeat(4, 280px);
+    grid-template-columns: repeat(4, 1fr);
     gap: 40px 32px;
+    width: 1120px;
   }
 `
