@@ -11,21 +11,23 @@ interface Coffee {
   title: string
   description: string
   tags: string[]
-  price: string
+  price: number
 }
 interface Cart {
   id: number
   url_image: string
   title: string
-  price: string
-  count: number
+  price: number
+  amount: number
 }
 
 interface CoffeeContextProps {
   list: Coffee[]
   cart: Cart[]
   cartTotal: number
-  addCoffeeToCart(id: number, count: number): void
+  addCoffeeToCart(id: number, amount: number): void
+  updateCoffeeAmount(id: number, amount: number): void
+  removeCoffeeFromCart(id: number): void
 }
 
 const CoffeeContext = createContext({} as CoffeeContextProps)
@@ -35,7 +37,7 @@ export function CoffeeContextProvider({ children }: CoffeeContextProviderProps) 
   const cartTotal = cart.length
   const list = db.coffees
 
-  function addCoffeeToCart(id: number, count: number) {
+  function addCoffeeToCart(id: number, amount: number) {
     const coffeeSelected = list.find(coffee => coffee.id === id)
 
     if (coffeeSelected) {
@@ -44,14 +46,35 @@ export function CoffeeContextProvider({ children }: CoffeeContextProviderProps) 
         url_image: coffeeSelected.url_image,
         title: coffeeSelected.title,
         price: coffeeSelected.price,
-        count
+        amount
       }
 
       setCart([newCoffee, ...cart])
     }
   }
 
-  return <CoffeeContext.Provider value={{ list, cart, cartTotal, addCoffeeToCart }}>{children}</CoffeeContext.Provider>
+  function removeCoffeeFromCart(id: number) {
+    setCart(cart.filter(coffee => coffee.id !== id))
+  }
+
+  function updateCoffeeAmount(id: number, amount: number) {
+    const auxCart = cart
+    const product = auxCart.find(product => product.id === id)
+
+
+    if (product && product.amount > 0 && !amount) {
+      product.amount += amount
+      setCart([...auxCart])
+    }
+  }
+
+  return (
+    <CoffeeContext.Provider
+      value={{ list, cart, cartTotal, addCoffeeToCart, updateCoffeeAmount, removeCoffeeFromCart }}
+    >
+      {children}
+    </CoffeeContext.Provider>
+  )
 }
 
 export function useCoffee() {

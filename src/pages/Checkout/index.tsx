@@ -5,20 +5,50 @@ import {
   AddressBlock,
   AddressForm,
   AddressTitle,
+  ButtonsCount,
   CartItens,
   OrderConfirmation,
   OrderContainer,
   Payment,
   PaymentCard,
-  PaymentTitle
+  PaymentTitle,
+  PriceInformation
 } from './styles'
-import { Bank, CreditCard, CurrencyDollar, MapPinLine, Money, Trash } from '@phosphor-icons/react'
+import {
+  Bank,
+  CreditCard,
+  CurrencyDollar,
+  MapPinLine,
+  Minus,
+  Money,
+  Plus,
+  Trash
+} from '@phosphor-icons/react'
 import { useCoffee } from '../../context/coffeeContext'
-import { IncrementDecrement } from '../../components/IncrementDecrement'
+import { formatPrice } from '../../utils/formatPrice'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import * as zod from 'zod'
+
+const schemaValidation = zod.object({
+  CEP: zod.string().length(8),
+  Rua: zod.string().min(1).max(30),
+  Número: zod.string().min(1).max(4),
+  Complemento: zod.string().min(0).max(30),
+  Bairro: zod.string().min(1).max(30),
+  Cidade: zod.string().min(1).max(30),
+  UF: zod.string().min(1).max(2)
+})
+
+export type NewCycleFormData = zod.infer<typeof schemaValidation>
 
 export function Checkout() {
-  const { cart } = useCoffee()
+  const { cart, updateCoffeeAmount, removeCoffeeFromCart } = useCoffee()
   const [active, setActive] = useState<number | null>(null)
+
+  const { register, handleSubmit, formState } = useForm<NewCycleFormData>({
+    resolver: zodResolver(schemaValidation)
+  })
 
   function handleClick(buttonId: number) {
     if (active === buttonId) {
@@ -28,7 +58,25 @@ export function Checkout() {
     }
   }
 
-  console.log({ cart })
+  function increment(id: number) {
+    updateCoffeeAmount(id, 1)
+  }
+
+  function decrement(id: number) {
+    updateCoffeeAmount(id, -1)
+  }
+
+  function handleSubmitOrder(data: NewCycleFormData) {}
+
+  const emptyCart = cart.length === 0
+
+  const totalPrice = cart.reduce((acc, curr) => {
+    const coffeePrice = curr.price * curr.amount
+
+    return acc + coffeePrice
+  }, 0)
+
+  const shippingPrice = 3.5
 
   return (
     <OrderContainer>
@@ -46,22 +94,22 @@ export function Checkout() {
 
           <AddressForm>
             <AddressBlock>
-              <input type='text' name='CEP' placeholder='CEP' />
+              <input type='text' placeholder='CEP' {...register('CEP')} />
             </AddressBlock>
 
             <AddressBlock>
-              <input type='text' name='Rua' placeholder='Rua' />
+              <input type='text' placeholder='Rua' {...register('Rua')} />
             </AddressBlock>
 
             <AddressBlock>
-              <input type='text' name='Número' placeholder='Número' />
-              <input type='text' name='Complemento' placeholder='Complemento' />
+              <input type='text' placeholder='Número' {...register('Número')} />
+              <input type='text' placeholder='Complemento' {...register('Complemento')} />
             </AddressBlock>
 
             <AddressBlock>
-              <input type='text' name='Bairro' placeholder='Bairro' />
-              <input type='text' name='Cidade' placeholder='Cidade' />
-              <input type='text' name='UF' placeholder='UF' />
+              <input type='text' placeholder='Bairro' {...register('Bairro')} />
+              <input type='text' placeholder='Cidade' {...register('Cidade')} />
+              <input type='text' placeholder='UF' {...register('UF')} />
             </AddressBlock>
           </AddressForm>
         </Address>
@@ -106,21 +154,49 @@ export function Checkout() {
                 <div>
                   <p>{coffee.title}</p>
                   <Actions>
-                    <IncrementDecrement count={coffee.count} />
-                    <button>
+                    <ButtonsCount>
+                      <button onClick={() => decrement(coffee.id)}>
+                        <Minus size={14} />
+                      </button>
+
+                      <input type='number' value={coffee.amount} readOnly />
+
+                      <button onClick={() => increment(coffee.id)}>
+                        <Plus size={14} />
+                      </button>
+                    </ButtonsCount>
+                    <button onClick={() => removeCoffeeFromCart(coffee.id)}>
                       <Trash size={16} />
                       Remover
                     </button>
                   </Actions>
                 </div>
 
-                <p>
-                  <span>R$ </span>
-                  {coffee.price}
-                </p>
+                <p>{formatPrice(coffee.price)}</p>
               </div>
             ))}
           </CartItens>
+
+          <PriceInformation>
+            <div>
+              <span>Total de itens</span>
+              <span className='price'>{!emptyCart ? formatPrice(totalPrice) : formatPrice(0)}</span>
+            </div>
+
+            <div>
+              <span>Entrega</span>
+              <span className='price'>{!emptyCart ? formatPrice(shippingPrice) : formatPrice(0)}</span>
+            </div>
+
+            <div>
+              <strong>Total</strong>
+              <strong>{!emptyCart ? formatPrice(totalPrice + shippingPrice) : formatPrice(0)}</strong>
+            </div>
+          </PriceInformation>
+
+          <button disabled={cart.length === 0} onClick={handleSubmit(handleSubmitOrder)}>
+            confirmar pedido
+          </button>
         </OrderConfirmation>
       </section>
     </OrderContainer>

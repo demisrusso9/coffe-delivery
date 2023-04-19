@@ -60,7 +60,7 @@ export const Footer = styled.div`
     font: 800 normal 1.5rem/1.3 'Baloo 2', sans-serif;
 
     span {
-      font: 400 .875rem/1.3 'Roboto', sans-serif;
+      font: 400 0.875rem/1.3 'Roboto', sans-serif;
     }
     margin-right: 23px;
   }
@@ -80,36 +80,32 @@ export const Footer = styled.div`
   }
 `
 
-export const IncrementDecrement = styled.div`
-  position: relative;
+export const ButtonsCount = styled.div`
   display: flex;
   align-items: center;
-  margin-left: 1rem;
-  
+  justify-content: center;
+
+  width: 72px;
+  height: 38px;
+
+  padding: 8px;
+  border-radius: 6px;
+
+  background: ${props => props.theme['base-button']};
+
   button {
-    position: absolute;
     border: none;
-    background: transparent;
     cursor: pointer;
-
-    &:first-child {
-      left: 5px;
-    }
-
-    &:last-child {
-      right: 5px;
-    }
+    background: transparent;
+    font-size: 0;
   }
-  
+
   input[type='number'] {
-    width: 72px;
-    height: 38px;
+    background: transparent;
+    width: 20px;
     text-align: center;
     border: none;
     outline: none;
-    border-radius: 6px;
-    padding: 8px;
-    background: ${props => props.theme['base-button']};
     font-family: 'Roboto', sans-serif;
     font-size: 1rem;
   }
@@ -122,5 +118,9 @@ export const IncrementDecrement = styled.div`
 
   svg {
     fill: ${props => props.theme['purple']};
+
+    &:hover {
+      fill: ${props => props.theme['purple-dark']};
+    }
   }
 `

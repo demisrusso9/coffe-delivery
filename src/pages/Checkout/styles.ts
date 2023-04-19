@@ -27,6 +27,7 @@ export const OrderContainer = styled.div`
   display: grid;
   grid-template-columns: 640px 448px;
   gap: 2rem;
+  margin-top: 126px;
 
   section h2 {
     margin-bottom: 15px;
@@ -139,6 +140,31 @@ export const PaymentCard = styled.div`
 
 export const OrderConfirmation = styled(CardBase)`
   border-radius: 6px 44px;
+  display: flex;
+  flex-direction: column;
+
+  button {
+    flex: 1;
+    cursor: pointer;
+    color: ${props => props.theme['white']};
+    background: ${props => props.theme['yellow']};
+    text-transform: uppercase;
+    font: bold 0.875rem/1.6 'Roboto', sans-serif;
+
+    border: none;
+    border-radius: 6px;
+
+    padding: 0.75rem 0;
+    transition: background 0.2s;
+
+    &:hover {
+      background: ${props => props.theme['yellow-dark']};
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
 `
 
 export const CartItens = styled.section`
@@ -147,6 +173,10 @@ export const CartItens = styled.section`
 
   > div {
     display: flex;
+
+    border-bottom: 1px solid ${props => props.theme['base-button']};
+    padding-bottom: 24px;
+    margin-bottom: 24px;
 
     img {
       width: 64px;
@@ -172,20 +202,16 @@ export const CartItens = styled.section`
         font: bold 1rem/1.3 'Roboto', sans-serif;
       }
     }
-
-    & + div {
-      border-top: 1px solid ${props => props.theme['base-button']};
-      padding-top: 24px;
-      margin-top: 24px;
-    }
   }
 `
+
 export const Actions = styled.div`
   display: flex;
   gap: 8px;
   padding: 8px 0;
 
-  button {
+  > button {
+    cursor: pointer;
     border: 0;
     display: flex;
     border-radius: 6px;
@@ -201,6 +227,82 @@ export const Actions = styled.div`
 
     svg {
       fill: ${props => props.theme['purple']};
+    }
+
+    transition: background 0.2s;
+
+    &:hover {
+      background: ${props => props.theme['base-hover']};
+    }
+  }
+`
+
+export const ButtonsCount = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 72px;
+  height: 38px;
+
+  padding: 8px;
+  border-radius: 6px;
+
+  background: ${props => props.theme['base-button']};
+
+  button {
+    border: none;
+    cursor: pointer;
+    background: transparent;
+    font-size: 0;
+  }
+
+  input[type='number'] {
+    background: transparent;
+    width: 20px;
+    text-align: center;
+    border: none;
+    outline: none;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  svg {
+    fill: ${props => props.theme['purple']};
+
+    &:hover {
+      fill: ${props => props.theme['purple-dark']};
+    }
+  }
+`
+
+export const PriceInformation = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+
+  div {
+    display: flex;
+    justify-content: space-between;
+
+    span {
+      font: 400 0.875rem/1.3 'Roboto', sans-serif;
+      color: 1px solid ${props => props.theme['base-text']};
+    }
+
+    .price {
+      font: 400 1rem/1.3 'Roboto', sans-serif;
+    }
+
+    strong {
+      font: bold 1.25rem/1.3 'Roboto', sans-serif;
     }
   }
 `
