@@ -143,7 +143,7 @@ export const OrderConfirmation = styled(CardBase)`
   display: flex;
   flex-direction: column;
 
-  button {
+  > button {
     flex: 1;
     cursor: pointer;
     color: ${props => props.theme['white']};

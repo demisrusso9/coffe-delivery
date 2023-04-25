@@ -29,44 +29,52 @@ import { formatPrice } from '../../utils/formatPrice'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as zod from 'zod'
+import { useNavigate } from 'react-router'
 
 const schemaValidation = zod.object({
-  CEP: zod.string().length(8),
-  Rua: zod.string().min(1).max(30),
-  Número: zod.string().min(1).max(4),
-  Complemento: zod.string().min(0).max(30),
-  Bairro: zod.string().min(1).max(30),
-  Cidade: zod.string().min(1).max(30),
-  UF: zod.string().min(1).max(2)
+  cep: zod.string().length(8),
+  rua: zod.string().min(1).max(30),
+  numero: zod.string().min(1).max(4),
+  complemento: zod.string().min(0).max(30),
+  bairro: zod.string().min(1).max(30),
+  cidade: zod.string().min(1).max(30),
+  uf: zod.string().min(1).max(2)
 })
+
+export interface PaymentMethod {
+  id: number
+  name: string
+}
 
 export type NewCycleFormData = zod.infer<typeof schemaValidation>
 
 export function Checkout() {
   const { cart, updateCoffeeAmount, removeCoffeeFromCart } = useCoffee()
-  const [active, setActive] = useState<number | null>(null)
+  const [activeButton, setActiveButton] = useState<number | null>(null)
+  const [payment, setPayment] = useState({} as PaymentMethod)
 
   const { register, handleSubmit, formState } = useForm<NewCycleFormData>({
     resolver: zodResolver(schemaValidation)
   })
 
-  function handleClick(buttonId: number) {
-    if (active === buttonId) {
-      setActive(null)
+  const navigate = useNavigate()
+
+  function selectPaymentMethod(buttonId: number, name: string) {
+    if (activeButton === buttonId) {
+      setActiveButton(null)
     } else {
-      setActive(buttonId)
+      setActiveButton(buttonId)
+      setPayment({ id: buttonId, name })
     }
   }
 
-  function increment(id: number) {
-    updateCoffeeAmount(id, 1)
-  }
+  function handleSubmitOrder(address: NewCycleFormData) {
+    if (!payment.id) return
 
-  function decrement(id: number) {
-    updateCoffeeAmount(id, -1)
+    navigate('/success', {
+      state: { address, payment }
+    })
   }
-
-  function handleSubmitOrder(data: NewCycleFormData) {}
 
   const emptyCart = cart.length === 0
 
@@ -94,22 +102,22 @@ export function Checkout() {
 
           <AddressForm>
             <AddressBlock>
-              <input type='text' placeholder='CEP' {...register('CEP')} />
+              <input type='text' placeholder='CEP' {...register('cep')} />
             </AddressBlock>
 
             <AddressBlock>
-              <input type='text' placeholder='Rua' {...register('Rua')} />
+              <input type='text' placeholder='Rua' {...register('rua')} />
             </AddressBlock>
 
             <AddressBlock>
-              <input type='text' placeholder='Número' {...register('Número')} />
-              <input type='text' placeholder='Complemento' {...register('Complemento')} />
+              <input type='text' placeholder='Número' {...register('numero')} />
+              <input type='text' placeholder='Complemento' {...register('complemento')} />
             </AddressBlock>
 
             <AddressBlock>
-              <input type='text' placeholder='Bairro' {...register('Bairro')} />
-              <input type='text' placeholder='Cidade' {...register('Cidade')} />
-              <input type='text' placeholder='UF' {...register('UF')} />
+              <input type='text' placeholder='Bairro' {...register('bairro')} />
+              <input type='text' placeholder='Cidade' {...register('cidade')} />
+              <input type='text' placeholder='UF' {...register('uf')} />
             </AddressBlock>
           </AddressForm>
         </Address>
@@ -124,19 +132,28 @@ export function Checkout() {
           </PaymentTitle>
 
           <PaymentCard>
-            <button className={active === 1 ? 'active' : ''} onClick={() => handleClick(1)}>
+            <button
+              className={activeButton === 1 ? 'active' : ''}
+              onClick={() => selectPaymentMethod(1, 'Cartão de Crédito')}
+            >
               <CreditCard size={16} />
-              <span>Cartão de crédito</span>
+              <span>Cartão de Crédito</span>
             </button>
 
-            <button className={active === 2 ? 'active' : ''} onClick={() => handleClick(2)}>
+            <button
+              className={activeButton === 2 ? 'active' : ''}
+              onClick={() => selectPaymentMethod(2, 'Cartão de Débito')}
+            >
               <Bank size={16} />
-              <span>cartão de débito</span>
+              <span>Cartão de Débito</span>
             </button>
 
-            <button className={active === 3 ? 'active' : ''} onClick={() => handleClick(3)}>
+            <button
+              className={activeButton === 3 ? 'active' : ''}
+              onClick={() => selectPaymentMethod(3, 'Dinheiro')}
+            >
               <Money size={16} />
-              <span>dinheiro</span>
+              <span>Dinheiro</span>
             </button>
           </PaymentCard>
         </Payment>
@@ -155,13 +172,13 @@ export function Checkout() {
                   <p>{coffee.title}</p>
                   <Actions>
                     <ButtonsCount>
-                      <button onClick={() => decrement(coffee.id)}>
+                      <button onClick={() => updateCoffeeAmount(coffee.id, -1)}>
                         <Minus size={14} />
                       </button>
 
                       <input type='number' value={coffee.amount} readOnly />
 
-                      <button onClick={() => increment(coffee.id)}>
+                      <button onClick={() => updateCoffeeAmount(coffee.id, 1)}>
                         <Plus size={14} />
                       </button>
                     </ButtonsCount>

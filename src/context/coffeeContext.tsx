@@ -38,9 +38,18 @@ export function CoffeeContextProvider({ children }: CoffeeContextProviderProps) 
   const list = db.coffees
 
   function addCoffeeToCart(id: number, amount: number) {
-    const coffeeSelected = list.find(coffee => coffee.id === id)
+    const coffeeSelected = list.find(coffee => coffee.id === id)!
 
-    if (coffeeSelected) {
+    const alreadyExist = cart.findIndex(coffee => coffee.id === coffeeSelected.id)
+
+    console.log(alreadyExist);
+
+    if (alreadyExist !== -1) {
+      const auxCart = cart
+      auxCart[alreadyExist].amount += amount
+
+      setCart([...auxCart])
+    } else {
       const newCoffee = {
         id,
         url_image: coffeeSelected.url_image,
@@ -59,13 +68,12 @@ export function CoffeeContextProvider({ children }: CoffeeContextProviderProps) 
 
   function updateCoffeeAmount(id: number, amount: number) {
     const auxCart = cart
-    const product = auxCart.find(product => product.id === id)
+    const product = auxCart.find(product => product.id === id)!
 
+    if (product.amount === 1 && amount === -1) return
 
-    if (product && product.amount > 0 && !amount) {
-      product.amount += amount
-      setCart([...auxCart])
-    }
+    product.amount += amount
+    setCart([...auxCart])
   }
 
   return (

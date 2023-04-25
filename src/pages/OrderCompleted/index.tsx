@@ -1,8 +1,27 @@
 import { useState } from 'react'
 import { OrderCompletedContainer, OrderInfo } from './styles'
 import illustration from '../../assets/illustration.png'
+import { useLocation } from 'react-router'
+import { PaymentMethod } from '../Checkout'
+
+interface LocationState {
+  address: {
+    cep: string
+    rua: string
+    numero: string
+    complemento: string
+    bairro: string
+    cidade: string
+    uf: string
+  }
+  payment: PaymentMethod
+}
 
 function OrderCompleted() {
+  const location = useLocation()
+
+  const { address, payment } = location.state as LocationState
+
   return (
     <OrderCompletedContainer>
       <h1>Uhu! Pedido confirmado</h1>
@@ -12,9 +31,12 @@ function OrderCompleted() {
         <OrderInfo>
           <div>
             <span>
-              Entrega em <strong>Rua João Daniel Martinelli, 102</strong>
+              Entrega em {address.rua}
+              <strong>, {address.numero}</strong>
             </span>
-            <strong>Farrapos - Porto Alegre, RS</strong>
+            <strong>
+              {address.bairro} - {address.cidade}, {address.uf}
+            </strong>
           </div>
 
           <div>
@@ -24,7 +46,7 @@ function OrderCompleted() {
 
           <div>
             <span>Pagamento na entrega</span>
-            <strong>Cartão de Crédito</strong>
+            <strong>{payment.name}</strong>
           </div>
         </OrderInfo>
 

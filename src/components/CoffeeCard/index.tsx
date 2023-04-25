@@ -26,7 +26,7 @@ export function CoffeeCard({ coffee }: CoffeCardProps) {
   }
 
   function increment() {
-    if (count < 10) setCount(state => state + 1)
+    if (count < 99) setCount(state => state + 1)
   }
   function decrement() {
     if (count > 0) setCount(state => state - 1)
