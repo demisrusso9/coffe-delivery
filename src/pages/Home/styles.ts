@@ -6,7 +6,7 @@ export const LandingSection = styled.section`
   justify-content: center;
   margin-bottom: 4rem;
   height: 544px;
-  margin-top: 126px;
+  margin-top: 20px;
   gap: 56px;
 
   > div {
@@ -27,8 +27,6 @@ export const LandingSection = styled.section`
     position: absolute;
     right: 0;
     width: 100%;
-    max-width: 500px;
-    max-height: 500px;
   }
 
   .landing {

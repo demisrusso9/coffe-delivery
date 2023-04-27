@@ -1,4 +1,17 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
+
+const iconBase = css`
+  border: 0;
+  background: transparent;
+  border-radius: 50%;
+  font-size: 0;
+  width: 32px;
+  height: 32px;
+
+  svg {
+    fill: ${props => props.theme['white']};
+  }
+`
 
 export const OrderCompletedContainer = styled.div`
   margin-top: 126px;
@@ -20,6 +33,8 @@ export const OrderCompletedContainer = styled.div`
   }
 
   img {
+    max-width: 492px;
+    max-height: 293px;
   }
 `
 
@@ -40,10 +55,74 @@ export const OrderInfo = styled.div`
 
   background-origin: border-box;
   background-clip: padding-box, border-box;
+`
+
+export const AddressLocation = styled.div`
+  display: flex;
+  gap: 20px;
 
   > div {
     display: flex;
     flex-direction: column;
   }
+
+  > button {
+    ${iconBase}
+    background: ${props => props.theme.purple};
+  }
+
+  span {
+    font: 400 1rem/1.3 'Roboto', sans-serif;
+    color: ${props => props.theme['base-text']};
+  }
 `
-// ${props => props.theme['background']};
+
+export const DeliveryTime = styled.div`
+  display: flex;
+  gap: 20px;
+
+  > div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  > button {
+    ${iconBase}
+    background: ${props => props.theme.yellow};
+  }
+
+  span,
+  strong {
+    font: 400 1rem/1.3 'Roboto', sans-serif;
+    color: ${props => props.theme['base-text']};
+  }
+
+  strong {
+    font-weight: bold;
+  }
+`
+
+export const Payment = styled.div`
+  display: flex;
+  gap: 20px;
+
+  > div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  > button {
+    ${iconBase}
+    background: ${props => props.theme['yellow-dark']};
+  }
+
+  span,
+  strong {
+    font: 400 1rem/1.3 'Roboto', sans-serif;
+    color: ${props => props.theme['base-text']};
+  }
+
+  strong {
+    font-weight: bold;
+  }
+`

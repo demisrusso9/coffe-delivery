@@ -27,7 +27,7 @@ export const OrderContainer = styled.div`
   display: grid;
   grid-template-columns: 640px 448px;
   gap: 2rem;
-  margin-top: 126px;
+  margin-top: 75px;
 
   section h2 {
     margin-bottom: 15px;
@@ -54,6 +54,8 @@ export const AddressForm = styled.form`
 
 export const AddressBlock = styled.div`
   display: flex;
+  position: relative;
+
   gap: 0.75rem;
 
   input {
@@ -77,14 +79,23 @@ export const AddressBlock = styled.div`
     }
   }
 
-  input[name='Rua'],
-  input[name='Complemento'],
-  input[name='Cidade'] {
+  input[name='rua'],
+  input[name='complemento'],
+  input[name='cidade'] {
     flex: 1;
   }
 
-  input[name='UF'] {
+  input[name='uf'] {
     width: 60px;
+  }
+
+  span {
+    position: absolute;
+    top: 13px;
+    right: 12px;
+
+    font: 400 italic .75rem/1.3 'Roboto', sans-serif;
+    color: ${props => props.theme['base-label']};
   }
 `
 

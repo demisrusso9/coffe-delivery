@@ -112,6 +112,7 @@ export function Checkout() {
             <AddressBlock>
               <input type='text' placeholder='Número' {...register('numero')} />
               <input type='text' placeholder='Complemento' {...register('complemento')} />
+              <span>Opcional</span>
             </AddressBlock>
 
             <AddressBlock>

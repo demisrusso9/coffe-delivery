@@ -11,6 +11,7 @@ export function Router() {
         <Route element={<Home />} path='/' />
         <Route element={<Checkout />} path='checkout' />
         <Route element={<OrderCompleted />} path='success' />
+        <Route path="*" element={<p>There's nothing here: 404!</p>} />
       </Route>
     </Routes>
   )

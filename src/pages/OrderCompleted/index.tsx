@@ -1,8 +1,10 @@
 import { useState } from 'react'
-import { OrderCompletedContainer, OrderInfo } from './styles'
+import { AddressLocation, DeliveryTime, OrderCompletedContainer, OrderInfo, Payment } from './styles'
 import illustration from '../../assets/illustration.png'
 import { useLocation } from 'react-router'
 import { PaymentMethod } from '../Checkout'
+import { CurrencyDollar, CurrencyDollarSimple,MapPin, Timer } from '@phosphor-icons/react'
+import { Navigate } from 'react-router-dom'
 
 interface LocationState {
   address: {
@@ -20,7 +22,14 @@ interface LocationState {
 function OrderCompleted() {
   const location = useLocation()
 
+  if(!location.state) {
+    return <Navigate to="/" replace />;
+  }
+
   const { address, payment } = location.state as LocationState
+
+  console.log({address, payment});
+
 
   return (
     <OrderCompletedContainer>
@@ -29,25 +38,45 @@ function OrderCompleted() {
 
       <section>
         <OrderInfo>
-          <div>
-            <span>
-              Entrega em {address.rua}
-              <strong>, {address.numero}</strong>
-            </span>
-            <strong>
-              {address.bairro} - {address.cidade}, {address.uf}
-            </strong>
-          </div>
+          <AddressLocation>
+            <button>
+              <MapPin size={16} weight='fill' />
+            </button>
 
-          <div>
-            <span>Previsão de entrega</span>
-            <strong>20 min - 30 min </strong>
-          </div>
+            <div>
+              <span>
+                Entrega em{' '}
+                <strong>
+                  {address.rua}, {address.numero}
+                </strong>
+              </span>
+              <span>
+                {address.bairro} - {address.cidade}, {address.uf}
+              </span>
+            </div>
+          </AddressLocation>
 
-          <div>
-            <span>Pagamento na entrega</span>
-            <strong>{payment.name}</strong>
-          </div>
+          <DeliveryTime>
+            <button>
+              <Timer size={16} weight='fill' />
+            </button>
+
+            <div>
+              <span>Previsão de entrega</span>
+              <strong>20 min - 30 min </strong>
+            </div>
+          </DeliveryTime>
+
+          <Payment>
+            <button>
+              <CurrencyDollar size={16} />
+            </button>
+
+            <div>
+              <span>Pagamento na entrega</span>
+              <strong>{payment.name}</strong>
+            </div>
+          </Payment>
         </OrderInfo>
 
         <img src={illustration} alt='' />

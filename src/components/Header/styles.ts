@@ -5,12 +5,13 @@ export const HeaderContainer = styled.header`
   top: 0;
 
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap: 820px;
 
   height: 104px;
   width: 100%;
+  max-width: 1440px;
+  padding: 0 5rem;
   background-color: ${props => props.theme.white};
   z-index: 1;
 
