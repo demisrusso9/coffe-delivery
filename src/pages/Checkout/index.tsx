@@ -30,16 +30,19 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as zod from 'zod'
 import { useNavigate } from 'react-router'
+import InputMask from 'react-input-mask'
 
-const schemaValidation = zod.object({
-  cep: zod.string().length(8),
-  rua: zod.string().min(1).max(30),
-  numero: zod.string().min(1).max(4),
-  complemento: zod.string().min(0).max(30),
-  bairro: zod.string().min(1).max(30),
-  cidade: zod.string().min(1).max(30),
-  uf: zod.string().min(1).max(2)
-})
+const schemaValidation = zod
+  .object({
+    cep: zod.string().min(9),
+    rua: zod.string().min(5).max(30),
+    numero: zod.string().min(1).max(4),
+    complemento: zod.string().min(0).max(30),
+    bairro: zod.string().min(4).max(30),
+    cidade: zod.string().min(4).max(30),
+    uf: zod.string().min(2)
+  })
+  .required()
 
 export interface PaymentMethod {
   id: number
@@ -102,7 +105,14 @@ export function Checkout() {
 
           <AddressForm>
             <AddressBlock>
-              <input type='text' placeholder='CEP' {...register('cep')} />
+              <InputMask
+                mask={'99999-999'}
+                alwaysShowMask={false}
+                maskPlaceholder={''}
+                type={'text'}
+                placeholder='CEP'
+                {...register('cep')}
+              />
             </AddressBlock>
 
             <AddressBlock>
@@ -110,7 +120,14 @@ export function Checkout() {
             </AddressBlock>
 
             <AddressBlock>
-              <input type='text' placeholder='Número' {...register('numero')} />
+              <InputMask
+                mask={'9999'}
+                alwaysShowMask={false}
+                maskPlaceholder={''}
+                type={'text'}
+                placeholder='Número'
+                {...register('numero')}
+              />
               <input type='text' placeholder='Complemento' {...register('complemento')} />
               <span>Opcional</span>
             </AddressBlock>
@@ -118,7 +135,15 @@ export function Checkout() {
             <AddressBlock>
               <input type='text' placeholder='Bairro' {...register('bairro')} />
               <input type='text' placeholder='Cidade' {...register('cidade')} />
-              <input type='text' placeholder='UF' {...register('uf')} />
+
+              <InputMask
+                mask={'aa'}
+                alwaysShowMask={false}
+                maskPlaceholder={null}
+                type={'text'}
+                placeholder='UF'
+                {...register('uf')}
+              />
             </AddressBlock>
           </AddressForm>
         </Address>
