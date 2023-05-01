@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { AddressLocation, DeliveryTime, OrderCompletedContainer, OrderInfo, Payment } from './styles'
-import illustration from '../../assets/illustration.png'
+import illustration from '/assets/illustration.png'
 import { useLocation } from 'react-router'
 import { PaymentMethod } from '../Checkout'
 import { CurrencyDollar, CurrencyDollarSimple,MapPin, Timer } from '@phosphor-icons/react'

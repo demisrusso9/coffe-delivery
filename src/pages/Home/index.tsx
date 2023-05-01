@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { Items, LandingSection, OurCoffeeSection } from './styles'
-import landing from '../../assets/landing.png'
+import landing from '/assets/landing.png'
 import { Coffee, Package, ShoppingCart, Timer } from '@phosphor-icons/react'
 import { CoffeeCard } from '../../components/CoffeeCard'
 
-import background from '../../assets/background.png'
+import background from '/assets/background.png'
 import { useCoffee } from '../../context/coffeeContext'
 
 export function Home() {

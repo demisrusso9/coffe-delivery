@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { HeaderContainer } from './styles'
-import logo from '../../assets/logo.png'
+import logo from '/assets/logo.png'
 import { MapPin, ShoppingCart } from '@phosphor-icons/react'
 import { useNavigate } from 'react-router-dom'
 import { useCoffee } from '../../context/coffeeContext'
