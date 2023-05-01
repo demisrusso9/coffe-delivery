@@ -36,6 +36,17 @@ export const OrderCompletedContainer = styled.div`
     max-width: 492px;
     max-height: 293px;
   }
+
+  @media (max-width: 1240px) {
+    section {
+      flex-direction: column;
+    }
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+  }
 `
 
 export const OrderInfo = styled.div`
@@ -55,6 +66,10 @@ export const OrderInfo = styled.div`
 
   background-origin: border-box;
   background-clip: padding-box, border-box;
+
+  @media (max-width: 1240px) {
+    padding: 20px;
+  }
 `
 
 export const AddressLocation = styled.div`

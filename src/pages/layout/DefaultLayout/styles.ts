@@ -11,4 +11,10 @@ export const LayoutContainer = styled.div`
   margin: 0 auto;
   padding: 5rem;
   background: ${props => props.theme.background};
+
+  
+  @media (max-width: 620px) {
+    padding: 1rem;
+    gap: 10rem;
+  }
 `

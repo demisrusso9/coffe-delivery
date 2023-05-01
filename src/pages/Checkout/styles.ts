@@ -20,6 +20,10 @@ export const TitleBase = styled.div`
 export const CardBase = styled.div`
   padding: 2.5rem;
   background: ${props => props.theme['base-card']};
+
+  @media (max-width: 1240px) {
+    padding: 1.5rem;
+  }
 `
 
 // Components
@@ -32,6 +36,15 @@ export const OrderContainer = styled.div`
   section h2 {
     margin-bottom: 15px;
     font: bold 1.125rem/1 'Baloo 2', sans-serif;
+  }
+
+  @media (max-width: 1240px) {
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media (max-width: 620px) {
+    margin-top: 120px;
   }
 `
 
@@ -94,8 +107,20 @@ export const AddressBlock = styled.div`
     top: 13px;
     right: 12px;
 
-    font: 400 italic .75rem/1.3 'Roboto', sans-serif;
+    font: 400 italic 0.75rem/1.3 'Roboto', sans-serif;
     color: ${props => props.theme['base-label']};
+  }
+
+  @media (max-width: 1240px) {
+    input[type='text'] {
+      width: 100%;
+    }
+
+    span {
+      display: none;
+    }
+
+    flex-direction: column;
   }
 `
 
@@ -146,6 +171,10 @@ export const PaymentCard = styled.div`
   .active {
     background: ${props => props.theme['purple-light']};
     border: 1px solid ${props => props.theme['purple']};
+  }
+
+  @media (max-width: 1240px) {
+    flex-direction: column;
   }
 `
 
@@ -211,6 +240,25 @@ export const CartItens = styled.section`
 
       span {
         font: bold 1rem/1.3 'Roboto', sans-serif;
+      }
+    }
+  }
+
+  @media (max-width: 1240px) {
+    > div {
+      flex-direction: column;
+      align-items: center;
+
+      > div p {
+        text-align: center;
+      }
+
+      img {
+        margin-right: 0;
+      }
+
+      p {
+        margin-left: 0;
       }
     }
   }

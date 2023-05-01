@@ -69,4 +69,17 @@ export const HeaderContainer = styled.header`
       }
     }
   }
+
+  @media (max-width: 440px) {
+    flex-direction: column;
+    justify-content: space-evenly;
+
+    img {
+      max-width: 60px;
+    }
+
+    button {
+      padding: 0.35em;
+    }
+  }
 `

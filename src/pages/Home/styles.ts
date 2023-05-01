@@ -6,7 +6,6 @@ export const LandingSection = styled.section`
   justify-content: center;
   margin-bottom: 4rem;
   height: 544px;
-  margin-top: 20px;
   gap: 56px;
 
   > div {
@@ -32,6 +31,38 @@ export const LandingSection = styled.section`
   .landing {
     max-width: 100%;
     height: auto;
+  }
+
+  @media (max-width: 1240px) {
+    flex-direction: column;
+
+    > div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 10rem;
+
+      h1 {
+        line-height: 1.1;
+        text-align: center;
+      }
+      p {
+        text-align: center;
+      }
+    }
+
+    .landing {
+      max-width: 300px;
+      max-height: 300px;
+    }
+  }
+
+  @media (max-width: 620px) {
+    margin-top: 130px;
+
+    h1 {
+      font-size: 2.5rem !important;
+    }
   }
 `
 
@@ -78,6 +109,11 @@ export const Items = styled.div`
       background: ${props => props.theme['purple']};
     }
   }
+
+  @media (max-width: 620px) {
+    display: flex;
+    flex-direction: column;
+  }
 `
 
 export const OurCoffeeSection = styled.section`
@@ -94,8 +130,15 @@ export const OurCoffeeSection = styled.section`
 
   > div {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fill, 252px);
     gap: 40px 32px;
-    width: 1120px;
+    justify-items: center;
+  }
+
+  @media (max-width: 620px) {
+    > div {
+      grid-template-columns: 1fr;
+      justify-items: center;
+    }
   }
 `
